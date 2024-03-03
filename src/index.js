@@ -16,6 +16,9 @@ app.use(
 );
 app.use(express.json());
 
+const db = require("./config/db");
+//Connect to DB
+db.connect();
 //HTTP logger
 app.use(morgan("combined"));
 
@@ -33,6 +36,6 @@ app.set("views", path.join(__dirname, "resources/views"));
 route(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`); //http://localhost:3000/
+    console.log(`App listening on port http://localhost:${port}`); //http://localhost:3000/
     console.log("Path: ", path.join(__dirname));
 });
