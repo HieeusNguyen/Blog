@@ -1,2 +1,7 @@
 h1 {
   color: green; }
+
+.avatar-user {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px; }

@@ -1,8 +1,32 @@
 <nav class="navbar navbar-light bg-light justify-content-between">
-  <a class="navbar-brand">Navbar</a>
-  <a class="navbar" href="/courses/create" >Đăng khóa học</a>
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
+    <div class="container">
+        <a class="navbar-brand">Navbar</a>
+
+        <div class="dropdown">
+
+            <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+            >
+                <img
+                    src="	https://files.fullstack.edu.vn/f8-prod/user_photos/219486/62c44a58f4166.jpg"
+                    alt=""
+                    class="avatar-user"
+                />
+                Nguyễn Hiếu
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="navbar" href="/courses/create">Đăng khóa học</a>
+                 <div class="dropdown-divider"></div>
+                <a class="navbar" href="/me/stored/courses">Khóa học của tôi</a>
+                <div class="dropdown-divider"></div>
+                <a class="navbar" href="#!">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+
 </nav>

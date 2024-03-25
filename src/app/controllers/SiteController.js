@@ -5,8 +5,9 @@ class SiteController {
         // [GET] /
         // res.render('home');
         Course.find({})
-            .then((course) => res.render("home", {course: mutipleMongooseToObject(course)
-            }))
+            .then((course) =>
+                res.render("home", { course: mutipleMongooseToObject(course) })
+            )
             .catch(next);
     }
 
