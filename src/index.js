@@ -2,13 +2,19 @@ const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const handlebars = require("express-handlebars");
-const methodOverride = require('method-override')
+const methodOverride = require("method-override");
 const { send } = require("process");
 const app = express();
 const port = 3000;
 const route = require("./routes/");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(cookieParser());
+
+app.use(cors());
 
 app.use(
     express.urlencoded({
@@ -24,7 +30,7 @@ db.connect();
 app.use(morgan("combined"));
 
 // override with POST having ?_method=DELETE
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 
 //Template engine
 app.engine(
