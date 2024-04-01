@@ -1,6 +1,7 @@
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 class AuthController {
     async register(req, res, next) {
         // [POST] /
@@ -23,32 +24,50 @@ class AuthController {
 
     async login(req, res) {
         try {
-          // Validate username and password presence (example)
-          if (!req.body.username || !req.body.password) {
-            return res.status(400).json({ message: 'Missing username or password' });
-          }
-      
-          // Find user by username
-          const user = await User.findOne({ username: req.body.username });
-      
-          if (!user) {
-            return res.status(401).json({ message: 'Username not found' });
-          }
-      
-          // Validate password
-          const validPassword = await bcrypt.compare(req.body.password, user.password);
-      
-          if (!validPassword) {
-            return res.status(401).json({ message: 'Invalid password' });
-          }
-      
-          // Login successful (replace with session management or token generation)
-          res.status(200).json({ message: 'Login successful' });
+            // Validate username and password presence (example)
+            if (!req.body.username || !req.body.password) {
+                return res
+                    .status(400)
+                    .json({ message: "Missing username or password" });
+            }
+
+            // Find user by username
+            const user = await User.findOne({ username: req.body.username });
+
+            if (!user) {
+                return res.status(401).json({ message: "Username not found" });
+            }
+
+            // Validate password
+            const validPassword = await bcrypt.compare(
+                req.body.password,
+                user.password
+            );
+
+            if (!validPassword) {
+                return res.status(401).json({ message: "Invalid password" });
+            }
+
+            // Login successful (replace with session management or token generation)
+            if (user && validPassword) {
+                const accessToken = jwt.sign(
+                    { id: user.id, admin: user.admin },
+                    "secretKey",
+                    {
+                        expiresIn: "30s",
+                    }
+                );
+                const { password, ...others } = user._doc;
+                res.status(200).json({
+                    message: "Login successful",
+                    token: accessToken,
+                });
+            }
         } catch (error) {
-          console.error(error);
-          res.status(500).json({ message: 'Internal server error' });
+            console.error(error);
+            res.status(500).json({ message: "Internal server error" });
         }
-      }
+    }
 }
 
 module.exports = new AuthController();
