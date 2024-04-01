@@ -2,6 +2,8 @@ const { mutipleMongooseToObject } = require("../../util/mongoose");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+let refreshTokens = [];
 class AuthController {
     async register(req, res, next) {
         // [POST] /
@@ -54,9 +56,23 @@ class AuthController {
                     { id: user.id, admin: user.admin },
                     "secretKey",
                     {
-                        expiresIn: "30s",
+                        expiresIn: "2h",
                     }
                 );
+                const refreshToken = jwt.sign(
+                    { id: user.id, admin: user.admin },
+                    "secretKey",
+                    {
+                        expiresIn: "2d",
+                    }
+                );
+                refreshTokens.push(refreshToken);
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,
+                    secure: false,
+                    path: "/",
+                    sameSite: "strict",
+                });
                 const { password, ...others } = user._doc;
                 res.status(200).json({
                     message: "Login successful",
@@ -67,6 +83,59 @@ class AuthController {
             console.error(error);
             res.status(500).json({ message: "Internal server error" });
         }
+    }
+
+    requestRefreshToken(req, res) {
+        //REDIS
+        const refreshToken = req.cookies.refreshToken;
+        if (!refreshTokens.includes(refreshToken)) {
+            return res.status(403).json({
+                message: "Refresh Token is not valid",
+            });
+        }
+        if (!refreshToken)
+            return res.status(401).json("You are not authenticated");
+        jwt.verify(refreshToken, "secretKey", (err, user) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+
+        //Create new access Token, refresh Token
+        const newAccessToken = jwt.sign(
+            { id: user.id, admin: user.admin },
+            "secretKey",
+            {
+                expiresIn: "2h",
+            }
+        );
+        const newRefreshToken = jwt.sign(
+            { id: user.id, admin: user.admin },
+            "secretKey",
+            {
+                expiresIn: "2d",
+            }
+        );
+
+        refreshTokens.push(newRefreshToken);
+
+        res.cookie("refreshToken", newRefreshToken, {
+            httpOnly: true,
+            secure: false,
+            path: "/",
+            sameSite: "strict",
+        });
+        res.status(200).json({ accessToken: newAccessToken });
+    }
+
+    logout(req, res) {
+        res.clearCookie("refreshToken");
+        refreshTokens = refreshTokens.filter(
+            (token) => token !== req.cookies.refreshToken
+        );
+        res.status(200).json("Logged out!");
     }
 }
 
