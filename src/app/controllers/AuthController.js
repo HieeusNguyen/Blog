@@ -1,4 +1,4 @@
-const { mutipleMongooseToObject } = require("../../util/mongoose");
+const token = require("../../util/token");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -52,20 +52,8 @@ class AuthController {
 
             // Login successful (replace with session management or token generation)
             if (user && validPassword) {
-                const accessToken = jwt.sign(
-                    { id: user.id, admin: user.admin },
-                    "secretKey",
-                    {
-                        expiresIn: "2h",
-                    }
-                );
-                const refreshToken = jwt.sign(
-                    { id: user.id, admin: user.admin },
-                    "secretKey",
-                    {
-                        expiresIn: "2d",
-                    }
-                );
+                const accessToken = token.accessToken(user);
+                const refreshToken = token.refreshToken(user);
                 refreshTokens.push(refreshToken);
                 res.cookie("refreshToken", refreshToken, {
                     httpOnly: true,
@@ -77,6 +65,7 @@ class AuthController {
                 res.status(200).json({
                     message: "Login successful",
                     token: accessToken,
+                    refreshTokens: refreshTokens
                 });
             }
         } catch (error) {
@@ -85,49 +74,35 @@ class AuthController {
         }
     }
 
-    requestRefreshToken(req, res) {
+    async requestRefreshToken(req, res) {
         //REDIS
         const refreshToken = req.cookies.refreshToken;
-        if (!refreshTokens.includes(refreshToken)) {
-            return res.status(403).json({
-                message: "Refresh Token is not valid",
-            });
-        }
+        //Send error if token is not valid
         if (!refreshToken)
-            return res.status(401).json("You are not authenticated");
+            return res.status(401).json("You're not authenticated");
+        if (!refreshTokens.includes(refreshToken)) {
+            return res.status(403).json({message: "Refresh token is not valid", array: refreshTokens});
+        }
         jwt.verify(refreshToken, "secretKey", (err, user) => {
             if (err) {
                 console.log(err);
             }
+            refreshTokens = refreshTokens.filter((token) => token == refreshToken);
+
+            //Create new access Token, refresh Token
+            const newAccessToken = token.accessToken(user);
+            const newRefreshToken = token.refreshToken(user);
+
+            refreshTokens.push(newRefreshToken);
+
+            res.cookie("refreshToken", newRefreshToken, {
+                httpOnly: true,
+                secure: false,
+                path: "/",
+                sameSite: "strict",
+            });
+            res.status(200).json({ accessToken: newAccessToken });
         });
-
-        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-        //Create new access Token, refresh Token
-        const newAccessToken = jwt.sign(
-            { id: user.id, admin: user.admin },
-            "secretKey",
-            {
-                expiresIn: "2h",
-            }
-        );
-        const newRefreshToken = jwt.sign(
-            { id: user.id, admin: user.admin },
-            "secretKey",
-            {
-                expiresIn: "2d",
-            }
-        );
-
-        refreshTokens.push(newRefreshToken);
-
-        res.cookie("refreshToken", newRefreshToken, {
-            httpOnly: true,
-            secure: false,
-            path: "/",
-            sameSite: "strict",
-        });
-        res.status(200).json({ accessToken: newAccessToken });
     }
 
     logout(req, res) {
