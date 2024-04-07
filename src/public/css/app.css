@@ -99,4 +99,63 @@ ul {
   cursor: pointer;
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../resources/scss/app.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAA;EACI;;;AAGJ;EACI;;;AAGJ;EACI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;;;AAKJ;EACI;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI%22,%22file%22:%22app.css%22%7D */
+footer {
+  background-color: #000;
+  color: #fff;
+  padding: 64px 48px;
+  margin-top: 60px;
+}
+
+.footer-main .section-stack {
+  margin-bottom: 60px;
+}
+
+.footer-main h5 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.footer-main p {
+  font-size: 1.8rem;
+}
+
+.footer-main input {
+  height: 44px;
+  font-size: 2rem;
+  padding-left: 16px;
+}
+
+.footer-main button {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.footer-main .input-group {
+  margin-left: 0;
+}
+
+.footer-main .footer-icons {
+  font-size: 2.2rem;
+  margin: 0 auto;
+}
+
+.footer-icons i {
+  color: #fff;
+  margin: 0 12px;
+}
+
+.footer-contact a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-contact li {
+  list-style: none;
+  margin: 16px auto;
+}
+
+.footer-contact li:hover a {
+  color: #fff;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../resources/scss/app.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAA;EACI;;;AAGJ;EACI;;;AAGJ;EACI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;;;AAKJ;EACI;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAIJ;EACI;EACA;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;;;AAEJ;EACI;EACA;;;AAEJ;EACI;EACA;;;AAEJ;EACI;EACA;;;AAEJ;EACI%22,%22file%22:%22app.css%22%7D */
