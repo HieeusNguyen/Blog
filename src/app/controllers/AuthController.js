@@ -74,7 +74,7 @@ class AuthController {
         }
     }
 
-    async requestRefreshToken(req, res) {
+    requestRefreshToken(req, res) {
         //REDIS
         const refreshToken = req.cookies.refreshToken;
         //Send error if token is not valid
@@ -86,8 +86,9 @@ class AuthController {
         jwt.verify(refreshToken, "secretKey", (err, user) => {
             if (err) {
                 console.log(err);
+                return res.status(500).json({ message: "Internal server error" });
             }
-            refreshTokens = refreshTokens.filter((token) => token == refreshToken);
+            refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
             //Create new access Token, refresh Token
             const newAccessToken = token.accessToken(user);

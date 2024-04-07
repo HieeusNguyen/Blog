@@ -1,32 +1,92 @@
-<nav class="navbar navbar-light bg-light justify-content-between">
-    <div class="container">
-        <a class="navbar-brand">Navbar</a>
-
-        <div class="dropdown">
-
-            <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-            >
-                <img
-                    src="	https://files.fullstack.edu.vn/f8-prod/user_photos/219486/62c44a58f4166.jpg"
-                    alt=""
-                    class="avatar-user"
-                />
-                Nguyễn Hiếu
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="navbar" href="/courses/create">Đăng khóa học</a>
-                 <div class="dropdown-divider"></div>
-                <a class="navbar" href="/me/stored/courses">Khóa học của tôi</a>
-                <div class="dropdown-divider"></div>
-                <a class="navbar" href="#!">Đăng xuất</a>
-            </div>
-        </div>
+<header class="header row justify-content-between align-items-center">
+    <a class="navbar-brand">
+        <img
+            src="http://localhost:3000/img/LOGO.png"
+            alt="XeDap.vn"
+            class="logo"
+        />
+    </a>
+    <nav class="navbar justify-content-between">
+        <ul class="menu row align-items-center">
+            <li>
+                <a href="#!">BIKES</a>
+            </li>
+            <li>
+                <a href="#!">PARTS</a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#!">FRAME</a>
+                    </li>
+                    <li>
+                        <a href="#!">PEDALS & GRIPS</a>
+                    </li>
+                    <li>
+                        <a href="#!">ALL PARTS</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#!">GEAR</a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#!">RIDING GEAR</a>
+                    </li>
+                    <li>
+                        <a href="#!">APPAREL</a>
+                    </li>
+                    <li>
+                        <a href="#!">TOOLS</a>
+                    </li>
+                    <li>
+                        <a href="#!">ALL GEAR</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#!">SALE</a>
+            </li>
+            <li>
+                <a href="#!">DEALERS</a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#!">DEALER LOCATOR</a>
+                    </li>
+                    <li>
+                        <a href="#!">DISTRIBUTIONS</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#!">TEAMS</a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#!">FACTORY</a>
+                    </li>
+                    <li>
+                        <a href="#!">PRO DEVELOPMENT</a>
+                    </li>
+                    <li>
+                        <a href="#!">ADVOCACY</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="tool-right">
+        <a href="#!">
+            <i
+                class="fa-solid fa-magnifying-glass fa-lg"
+                style="color: #ffffff;"
+            ></i>
+        </a>
+        <a href="#!">
+            <i class="fa-regular fa-user fa-lg" style="color: #ffffff;"></i>
+        </a>
+        <a href="#!">
+            <i
+                class="fa-solid fa-cart-shopping fa-lg"
+                style="color: #ffffff;"
+            ></i>
+        </a>
     </div>
-
-</nav>
+</header>
