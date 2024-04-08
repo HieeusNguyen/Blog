@@ -3,10 +3,10 @@ const User = require("../models/User");
 class AccountController {
     login(req, res) {
         // [GET] / login
-        res.render("login");
+        res.render("account/login");
     }
     register(req, res) {
-        res.render("register");
+        res.render("account/register");
     }
 }
 

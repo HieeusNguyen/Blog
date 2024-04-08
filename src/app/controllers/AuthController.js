@@ -15,12 +15,17 @@ class AuthController {
             username: req.body.username,
             email: req.body.email,
             password: hashed,
+            name: req.body.name,
+            phone: req.body.phone,
+            country: req.body.country,
+            city: req.body.city,
+            address: req.body.address,
         });
 
         //Save to DB
         newUser
             .save()
-            .then(() => res.send("Successfully Register"))
+            .then(() => res.redirect("/account/login"))
             .catch(next);
     }
 
@@ -65,7 +70,7 @@ class AuthController {
                 res.status(200).json({
                     message: "Login successful",
                     token: accessToken,
-                    refreshTokens: refreshTokens
+                    refreshTokens: refreshTokens,
                 });
             }
         } catch (error) {
@@ -81,14 +86,23 @@ class AuthController {
         if (!refreshToken)
             return res.status(401).json("You're not authenticated");
         if (!refreshTokens.includes(refreshToken)) {
-            return res.status(403).json({message: "Refresh token is not valid", array: refreshTokens});
+            return res
+                .status(403)
+                .json({
+                    message: "Refresh token is not valid",
+                    array: refreshTokens,
+                });
         }
         jwt.verify(refreshToken, "secretKey", (err, user) => {
             if (err) {
                 console.log(err);
-                return res.status(500).json({ message: "Internal server error" });
+                return res
+                    .status(500)
+                    .json({ message: "Internal server error" });
             }
-            refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+            refreshTokens = refreshTokens.filter(
+                (token) => token !== refreshToken
+            );
 
             //Create new access Token, refresh Token
             const newAccessToken = token.accessToken(user);
